@@ -1,4 +1,4 @@
-name: Terraform Deployment
+name: Terraform Deployment with Application
 on: workflow_dispatch
 
 jobs:
@@ -71,6 +71,7 @@ jobs:
         run: |
           cd terraform
           ls
+          cat backend.tf
       - name: Terraform Init
         id: init
         run: |
