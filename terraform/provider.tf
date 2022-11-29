@@ -10,9 +10,9 @@ terraform {
     }
   }
   backend "azurerm" {
-    resource_group_name = "mtc-tfstates"
+    resource_group_name  = "mtc-tfstates"
     storage_account_name = "mtctfstates"
-    container_name = "terraformstate"
-    key = "terraformstate.tfstate"
+    container_name       = "terraformstate"
+    key                  = "terraformstate.tfstate"
   }
 }

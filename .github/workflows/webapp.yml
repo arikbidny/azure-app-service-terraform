@@ -20,11 +20,11 @@ jobs:
         with:
           # terraform_version: 1.0.10
           terraform_version: 1.3.5
-      - name: Terrafrom Format
-        id: format 
-        run: |
-          cd terraform
-          terraform fmt -check
+      # - name: Terrafrom Format
+      #   id: format 
+      #   run: |
+      #     cd terraform
+      #     terraform fmt -check
       - name: Terraform Init
         id: init
         run: |
