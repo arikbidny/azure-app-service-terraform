@@ -8,6 +8,10 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+      RESOURCE_GROUP_NAME: mtc-terraform-state
+      STORAGE_ACCOUNT_NAME: mtcstoragetfstate01
+      CONTAINER_NAME: tfstate
+      BLOB_NAME: terraform.tfstate
     runs-on: ubuntu-latest
     defaults:
       run:
