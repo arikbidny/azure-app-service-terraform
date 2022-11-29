@@ -15,18 +15,50 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Login to Azure with Service Principal
+        uses: Azure/login@v1.4.3
+        with:
+          # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Create Terraform backend state storage
+        uses: Azure/cli@v1.0.6
+        with:
+          # Azure CLI version to be used to execute the script. If not provided, latest version is used
+          # azcliversion: 2.34.1 # optional, default is agentazcliversion
+          inlineScript: |
+            az version
+            # Create resource group
+            az group create --name $RESOURCE_GROUP_NAME --location westeurope
+            
+            # Create storage account
+            az storage account create --name $STORAGE_ACCOUNT_NAME \
+              --resource-group $RESOURCE_GROUP_NAME \
+              --sku Standard_LRS \
+              --encryption-services blob
+            
+            # Create blob container
+            az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME
+            
+            # generate backend.tf file
+            cd $WORKING_DIRECTORY
+            cat <<EOT > backend.tf
+            terraform {
+              backend "azurerm" {
+                resource_group_name   = "$RESOURCE_GROUP_NAME"
+                storage_account_name  = "$STORAGE_ACCOUNT_NAME"
+                container_name        = "$CONTAINER_NAME"
+                key                   = "$BLOB_NAME"
+              }
+            }
+            EOT
+            
+            cat backend.tf
+      # Install the latest version of Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           # terraform_version: 1.0.10
           terraform_version: 1.3.5
-      # - name: Terrafrom Format
-      #   id: format 
-      #   run: |
-      #     cd terraform
-      #     terraform fmt -check
-      - name: Terraform version
-        run: terraform version
       - name: Terraform Init
         id: init
         run: |
