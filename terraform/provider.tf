@@ -16,7 +16,3 @@ terraform {
     key = "terraformstate.tfstate"
   }
 }
-
-
-# storage account = mtctfstates
-# container = terraformstate
