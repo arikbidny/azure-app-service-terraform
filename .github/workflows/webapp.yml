@@ -12,6 +12,7 @@ jobs:
       STORAGE_ACCOUNT_NAME: mtcstoragetfstate01
       CONTAINER_NAME: tfstate
       BLOB_NAME: terraform.tfstate
+      SUB_ID: ${{ secrets.SUB_ID }}
     runs-on: ubuntu-latest
     defaults:
       run:
