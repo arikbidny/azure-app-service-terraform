@@ -8,12 +8,12 @@ variable "resource_group_name" {
   description = "Resource Group name"
 }
 
-variable "app_service_plan_name" {
-  type        = string
-  description = "App Service Plan"
-}
+# variable "app_service_plan_name" {
+#   type        = string
+#   description = "App Service Plan"
+# }
 
-variable "app_service_name" {
-  type        = string
-  description = "App Service name"
-}
+# variable "app_service_name" {
+#   type        = string
+#   description = "App Service name"
+# }
